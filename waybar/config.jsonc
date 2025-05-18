@@ -6,13 +6,19 @@
     // "width": 1280, // Waybar width
     //"spacing": 20, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": [ "hyprland/workspaces" ],
-    "modules-center": [ "hyprland/window" ],
+    "modules-left": [
+        "hyprland/workspaces",
+        "cpu",
+        "memory",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
     "modules-right": [
-        "pulseaudio",
+        //"pulseaudio",
         "network",
-        //"cpu",
-        //"memory",
+        //"mpd",
         //"backlight",
         //"battery#bat2",
         //"tray",
@@ -20,7 +26,8 @@
         //"tray",
         //"custom/media",
         "battery",
-        "clock",
+        "power-profiles-daemon",
+        //"clock",
         "custom/power"
     ],
     // Modules configuration
@@ -101,24 +108,25 @@
         "spacing": 10
     },
     "clock": {
+        "format": "[ {:%H:%M 󰃰  %a %d/%m} ]",
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%d/%m/%Y}"
+        "format-alt": "[ {:%H:%M 󰃰  %A, %d %B %Y} ]"
     },
     "cpu": {
-        "format": "{usage}% CPU "
+        "format": "{usage}% "
         //"tooltip": false //-> se não tiver essa prop, é true por padrão
     },
     "memory": {
-        "format": "{}% RAM "
+        "format": "{}% "
     },
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C",
-        "format-icons": ["", "", ""]
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
     },
     "backlight": {
         // "device": "acpi_video1",
@@ -132,10 +140,10 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
+        "format": "{icon}",
+        "format-full": "{icon}",
+        "format-charging": "{icon} ",
+        "format-plugged": "{icon} ",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
@@ -168,14 +176,14 @@
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format-bluetooth-muted": "󰂲 {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}%  ",
+        "format-source-muted": " ",
         "format-icons": {
             "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
+            "hands-free": " ",
+            "headset": " ",
             "phone": " ",
             "portable": " ",
             "car": " ",
@@ -198,5 +206,11 @@
     "custom/power": {
         "format" : " ⏻ ",
 	    "on-click": "nwg-bar"
+    },
+    "custom/spotify": {
+        "exec": "playerctl metadata --format :{{ status }} | {{ artist }} - {{ title }}",
+        "return-type": "json",
+        "interval": 1,
+        "tooltip": false
     }
 }
